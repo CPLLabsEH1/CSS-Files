@@ -8,11 +8,11 @@
 		#6200EE				-	button color in buttons, title color in panels      
 		#EFE7FC				-	secondary theme color - node question background
 		#f5f5f5			-	light content section background
-		#scale#	(not working!)	-	for changing font size, as the base is 16px (1rem), try to keep font size as an integer ex: ;  
-									scaling to 110% will make 16px font 10% bigger, that's 17.6px
-									scaling it to 112.5% , will make the base font even integer 18px, use: 
-										$scale_value = $desired_font_size / $base_font_size;
-										where $base_font_size = 16
+		#scale#	(not working!)	-	for changing font size, as the base is 16px (1rem), try to keep font size as 
+						an integer ex: ;  scaling to 110% will make 16px font 10% bigger, that's 17.6px
+						scaling it to 112.5% , will make the base font even integer 18px, use: 
+						$scale_value = $desired_font_size / $base_font_size;
+						where $base_font_size = 16
 	Theme defaults are:
 		body_text	=	#ff00f7 (black-ish)
 		primary 	=	#6200EE (purple)
@@ -20,10 +20,10 @@
 		complement	=	#f5f5f5	(light gray)
 
 	Note: 
-		Call the custom-css.php file with these variables. Use like: 
-		https://zingtree.com/css/custom-css.php?template=default-2&body_text=ff00f7&primary=6200EE&secondary=3b1d65&complement=f5f5f5		
+		Call the custom-css.php file with these variables. Use like: 	
 		- remeber that localy https may not work, an you would need to use http:// protocole. 
-		- you can "hard-code" it here: ..\website\public\deploy\tree.php ( look for: "<?= $css_include ?>", and replace with this css path) 
+		- you can "hard-code" it here: ..\website\public\deploy\tree.php 
+			( look for: "<?= $css_include ?>", and replace with this css path) 
 
 ******************************************************/
 
