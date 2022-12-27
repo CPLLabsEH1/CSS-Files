@@ -1,4 +1,3 @@
-
 @charset "utf-8";
 
 /******************************************************
@@ -41,7 +40,7 @@
 	/* User vars */
 	--color-body:  		#44325E;
 	--color-primary:  	#007AEF;
-	--color-secondary:  #EFE7FC;
+	--color-secondary:  	#EFE7FC;
 	--color-light:		#f5f5f5; 
 
 	/* Theme vars */
