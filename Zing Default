@@ -5,7 +5,7 @@
 	
 	Default settings: 
 		#44325E				-	body text color     
-		#6200EE				-	button color in buttons, title color in panels      
+		#007AEF				-	button color in buttons, title color in panels      
 		#EFE7FC				-	secondary theme color - node question background
 		#f5f5f5			-	light content section background
 		#scale#	(not working!)	-	for changing font size, as the base is 16px (1rem), try to keep font size as an integer ex: ;  
