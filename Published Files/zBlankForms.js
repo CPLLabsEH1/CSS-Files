@@ -79,6 +79,11 @@ var CRTForm = app.trustedFunction(function(){
     app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Clinical Resolution Ticket Form.pdf");
 });
 
+//Open In Transit STAT Request Form
+var InTransitSTATForm = app.trustedFunction(function(){
+    app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/In Transit STAT Request Form.pdf");
+});
+
 //ADDING MENU AND SUBMENU
 app.addSubMenu({cName:"Blank Forms", cParent:"Window", nPos:1});
 app.addSubMenu({cName:"Requisitions", cParent:"Blank Forms", nPos:1});
@@ -93,6 +98,7 @@ app.addMenuItem({cName:"CAR with BCL", cParent:"CARs & BCLs", cExec:"CARBCL();"}
 app.addMenuItem({cName:"BCL", cParent:"CARs & BCLs", cExec:"BCL();"});
 app.addMenuItem({cName:"Transfer BCL", cParent:"CARs & BCLs", cExec:"TransferBCL();"});
 app.addMenuItem({cName:"CAR", cParent:"CARs & BCLs", cExec:"CAR();"});
+app.addMenuItem({cName:"In Transit STAT", cParent:"Blank Forms", cExec:"InTransitSTATForm();"});
 app.addMenuItem({cName:"Repeat", cParent:"Blank Forms", cExec:"RepeatForm();"});
 app.addMenuItem({cName:"Maternal Recal", cParent:"Blank Forms", cExec:"MaternalRecalForm();"});
 app.addSubMenu({cName:"Misc Forms", cParent:"Blank Forms"});
@@ -103,7 +109,7 @@ app.addMenuItem({cName:"Account Information Sheet", cParent:"Misc Forms", cExec:
 
 //Popup Menu for the tool bar
 var BlankFormsMenu = app.trustedFunction(function(){
-    var cRtn = app.popUpMenu(["Requisitions","Clinical Req","Cytology Req","Abnormal Slide Form","Allergen Attachment"],"CRT","SRF",["CARs & BCLs","CAR w/ BCL","BCL","Transfer BCL","CAR"],"Repeat","Maternal Recal",["Misc Forms","Time Correction and Mileage Form","Technical Issue Form","Account Information Sheet"]);
+    var cRtn = app.popUpMenu(["Requisitions","Clinical Req","Cytology Req","Abnormal Slide Form","Allergen Attachment"],"CRT","SRF",["CARs & BCLs","CAR w/ BCL","BCL","Transfer BCL","CAR"],"In Tranist STAT","Repeat","Maternal Recal",["Misc Forms","Time Correction and Mileage Form","Technical Issue Form","Account Information Sheet"]);
     if(cRtn){
         if(cRtn == "Clinical Req"){
             ClinicalReq();
@@ -112,9 +118,9 @@ var BlankFormsMenu = app.trustedFunction(function(){
         }else if(cRtn == "CAR w/ BCL"){
             CARBCL();
         }else if(cRtn == "BCL"){
-	BCL();
+            BCL();
         }else if(cRtn == "Transfer BCL"){
-	TransferBCL();
+            TransferBCL();
         }else if(cRtn == "SRF"){
             SRF();
         }else if(cRtn == "Repeat"){
@@ -135,6 +141,8 @@ var BlankFormsMenu = app.trustedFunction(function(){
             TimeCorr(); 
         }else if(cRtn == "CRT"){
             CRTForm(); 
+        }else if(cRtn == "In Tranist STAT"){
+            InTransitSTATForm(); 
         }else{
             return;
         }
