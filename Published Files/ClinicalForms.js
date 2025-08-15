@@ -810,8 +810,8 @@ var CRTSend = app.trustedFunction(function(){
 app.addSubMenu({cName:"Submit Clinical Forms", cParent:"File", nPos:1});
 app.addMenuItem({cName:"CRT", cParent:"Submit Clinical Forms", cExec:"CRTSend();"});
 app.addSubMenu({cName:"BCL", cParent:"Submit Clinical Forms"});
-app.addMenuItem({cName:"Before 10/1", cParent:"BCL", cExec:"BCLSend();"});
-app.addMenuItem({cName:"After 10/1", cParent:"BCL", cExec:"BCLXFin();"});
+app.addMenuItem({cName:"Before 10/1/24", cParent:"BCL", cExec:"BCLSend();"});
+app.addMenuItem({cName:"After 10/1/24", cParent:"BCL", cExec:"BCLXFin();"});
 app.addMenuItem({cName:"SRF", cParent:"Submit Clinical Forms", cExec:"SRFSend();"});
 app.addMenuItem({cName:"CAR", cParent:"Submit Clinical Forms", cExec:"CARSend();"});
 app.addSubMenu({cName:"Repeats", cParent:"Submit Clinical Forms"});
@@ -820,7 +820,7 @@ app.addMenuItem({cName:"Finish Repeat", cParent:"Repeats", cExec:"Repeat();"});
 app.addMenuItem({cName:"Maternal Recal", cParent:"Submit Clinical Forms", cExec:"MaternalRecal();"});
 
 var ClinicalFormsMenu = app.trustedFunction(function(){
-    var cRtn = app.popUpMenu(["BCL","Before 10/1","After 10/1"],"CRT","SRF","CAR",["Repeats","Start Repeat","Finish Repeat"],"Maternal Recal");
+    var cRtn = app.popUpMenu(["BCL","Before 10/1/24","After 10/1/24"],"CRT","SRF","CAR",["Repeats","Start Repeat","Finish Repeat"],"Maternal Recal");
     if(cRtn){
         if(cRtn == "Start Repeat"){
             RepeatSend();
@@ -830,11 +830,11 @@ var ClinicalFormsMenu = app.trustedFunction(function(){
             MaternalRecal();
         }else if(cRtn == "SRF"){
             SRFSend();
-        }else if(cRtn == "Before 10/1"){
+        }else if(cRtn == "Before 10/1/24"){
             BCLSend();
         }else if(cRtn == "CAR"){
             CARSend();
-        }else if(cRtn == "After 10/1"){
+        }else if(cRtn == "After 10/1/24"){
             BCLXFin();
         }else if(cRtn == "CRT"){
             CRTSend();
