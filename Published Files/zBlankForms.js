@@ -84,6 +84,16 @@ var InTransitSTATForm = app.trustedFunction(function(){
     app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/In Transit STAT Request Form.pdf");
 });
 
+//Open Lymphoma AO Form
+var LymphomaAOForm = app.trustedFunction(function(){
+    app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Lymphoma Forms.pdf");
+});
+
+//Open Courier Log
+var CourierLog = app.trustedFunction(function(){
+    app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Courier Log.pdf");
+});
+
 //ADDING MENU AND SUBMENU
 app.addSubMenu({cName:"Blank Forms", cParent:"Window", nPos:1});
 app.addSubMenu({cName:"Requisitions", cParent:"Blank Forms", nPos:1});
@@ -91,6 +101,7 @@ app.addMenuItem({cName:"Clinical Req", cParent:"Requisitions", cExec:"ClinicalRe
 app.addMenuItem({cName:"Cytology Req", cParent:"Requisitions", cExec:"CytoReq();"});
 app.addMenuItem({cName:"Abnormal Slide Form", cParent:"Requisitions", cExec:"AbnSlideRevForm();"});
 app.addMenuItem({cName:"Allergen Attachment", cParent:"Requisitions", cExec:"Allergen();"});
+app.addMenuItem({cName:"Lymphoma AO Req", cParent:"Requisitions", cExec:"LymphomaAOForm();"});
 app.addMenuItem({cName:"CRT", cParent:"Blank Forms", cExec:"CRTform();"});
 app.addMenuItem({cName:"SRF", cParent:"Blank Forms", cExec:"SRF();"});
 app.addSubMenu({cName:"CARs & BCLs", cParent:"Blank Forms"});
@@ -105,11 +116,12 @@ app.addSubMenu({cName:"Misc Forms", cParent:"Blank Forms"});
 app.addMenuItem({cName:"Time Correction and Mileage Form", cParent:"Misc Forms", cExec:"TimeCorr();"});
 app.addMenuItem({cName:"Technical Issue Form", cParent:"Misc Forms", cExec:"TechIssueForm();"});
 app.addMenuItem({cName:"Account Information Sheet", cParent:"Misc Forms", cExec:"AIS();"});
+app.addMenuItem({cName:"Courier Log", cParent:"Blank Forms", cExec:"CourierLog();"});
 
 
 //Popup Menu for the tool bar
 var BlankFormsMenu = app.trustedFunction(function(){
-    var cRtn = app.popUpMenu(["Requisitions","Clinical Req","Cytology Req","Abnormal Slide Form","Allergen Attachment"],"CRT","SRF",["CARs & BCLs","CAR w/ BCL","BCL","Transfer BCL","CAR"],"In Tranist STAT","Repeat","Maternal Recal",["Misc Forms","Time Correction and Mileage Form","Technical Issue Form","Account Information Sheet"]);
+    var cRtn = app.popUpMenu(["Requisitions","Clinical Req","Cytology Req","Abnormal Slide Form","Allergen Attachment","Lymphoma AO Req"],"CRT","SRF",["CARs & BCLs","CAR w/ BCL","BCL","Transfer BCL","CAR"],"In Tranist STAT","Repeat","Maternal Recal",["Misc Forms","Time Correction and Mileage Form","Technical Issue Form","Account Information Sheet"],"Courier Log");
     if(cRtn){
         if(cRtn == "Clinical Req"){
             ClinicalReq();
@@ -143,6 +155,10 @@ var BlankFormsMenu = app.trustedFunction(function(){
             CRTForm(); 
         }else if(cRtn == "In Tranist STAT"){
             InTransitSTATForm(); 
+        }else if(cRtn == "Lymphoma AO Req"){
+            LymphomaAOForm(); 
+        }else if(cRtn == "Courier Log"){
+            CourierLog(); 
         }else{
             return;
         }

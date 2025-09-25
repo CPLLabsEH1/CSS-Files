@@ -26,40 +26,48 @@ function DownTimeDateString()
 
 //THE START OF THE TWO FORMS CODING
 // Function that checks for required fields and saves file
-var TechDownTime = app.trustedFunction(function()
-{
+var TechDownTime = app.trustedFunction(function(){
+
     // File Name
     var DowntimeFileName = DownTimeDateString() + " " + getLoginName();
 
-    //Check for required fields
-    var emptyFields = new Array();
-    for (var i = 0; i < this.numFields; i++)
-    {
+    if (this.getField("TechIssueFormv1") === null){
+
+      var TechIssueAlert = app.alert ("You are using the incorrect form for this button \n\n" + "The correct Technical Issue Form will open from the Blank Forms Button",0,0);
+
+      if (TechIssueAlert == 1){
+        // this.closeDoc(true);
+        app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Technical Issue Form.pdf");
+      };  
+    }else {
+
+      //Check for required fields
+      var emptyFields = new Array();
+      for (var i = 0; i < this.numFields; i++){
         var rName = this.getNthFieldName(i);
         var rField = this.getField(rName);
         if (rField.type != "button" && this.getField(rName).required && (this.getField(rName).value == null || this.getField(rName).value == "" || this.getField(rName).valueAsString != "Yes" || this.getField(rName).valueAsString != "No"))
         {
             emptyFields[emptyFields.length] = rName;
         }
-    }
+      }
 
-    // Set required Fields as focus
-    var errormsg = "Please complete the following required fields: \n\n";
-    for (j = 0; j < emptyFields.length; j++)
-    {
+      // Set required Fields as focus
+      var errormsg = "Please complete the following required fields: \n\n";
+      for (j = 0; j < emptyFields.length; j++){
+
         if (emptyFields[j].value == null)
         {
             errormsg = errormsg + emptyFields[j] + '\n';
             var rField2 = this.getField(emptyFields[j]);
             rField2.setFocus();
         }
-    }
+      }
 
-    // Sets the alert if required fields are needed else saves and closes file
-    if (emptyFields.length > 0)
-    {
+      // Sets the alert if required fields are needed else saves and closes file
+      if (emptyFields.length > 0){
         app.alert(errormsg);
-    }else{
+      }else{
         // Set up the app alert to submit file
         var nTechDT = app.alert("Submit Technical Issue Log?",2,2);
 
@@ -75,37 +83,48 @@ var TechDownTime = app.trustedFunction(function()
             // Closes the file
             this.closeDoc(true);
         }
-    }
+      }
+    }  
 });
 
 //This is the function for the time correction form 
-var TimeCorrection = app.trustedFunction(function()
-{
-// Checks if a digital signature is made
-  var isSigned = false;
-  for (var i=0; i<this.numFields; i++) {
-    var fname = this.getNthFieldName(i);
-    var f = this.getField(fname);
-    if (f==null) continue;
-    if (f.type=="signature" && f.value!="") {isSigned = true; break;}
-  }
+var TimeCorrection = app.trustedFunction(function(){
 
-// Checks if the hidden checkbox is checked to help catch fill and sign signatures
-  var isChecked = this.getField("HiddenSig").value;
+  if (this.getField("TimeCorrectionFormv1") === null){
 
-// Saving email variables
-  var TimeCorName = this.getField("Name").value;
-  var TimeCorEmail = "ATorres@cpllabs.com; DBaileySampson@cpllabs.com; eherrera@cpllabs.com; msandoval@cpllabs.com";
-  var TimeCorSubject = "Time Correction " + TimeCorName;
+    var TechIssueAlert = app.alert ("You are using the incorrect form for this button \n\n" + "The correct Time Correction & Mileage Form will open from the Blank Forms Button",0,0);
 
-// Will send email to supervisors
-  if (isSigned || isChecked === "Yes"){
-    this.mailDoc({bUI: true, cTo: TimeCorEmail, cSubject: TimeCorSubject});
-    this.closeDoc(true);
-  } else {
+    if (TechIssueAlert == 1){
+      app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Time Correction and Mileage Request Form.pdf");
+    };  
+  }else {
+
+    // Checks if a digital signature is made
+    var isSigned = false;
+    for (var i=0; i<this.numFields; i++) {
+      var fname = this.getNthFieldName(i);
+      var f = this.getField(fname);
+      if (f==null) continue;
+      if (f.type=="signature" && f.value!="") {isSigned = true; break;}
+    }
+
+    // Checks if the hidden checkbox is checked to help catch fill and sign signatures
+    var isChecked = this.getField("HiddenSig").value;
+
+    // Saving email variables
+    var TimeCorName = this.getField("Name").value;
+    var TimeCorEmail = "ATorres@cpllabs.com; DBaileySampson@cpllabs.com; eherrera@cpllabs.com; msandoval@cpllabs.com";
+    var TimeCorSubject = "Time Correction " + TimeCorName;
+
+    // Will send email to supervisors
+    if (isSigned || isChecked === "Yes"){
+      this.mailDoc({bUI: true, cTo: TimeCorEmail, cSubject: TimeCorSubject});
+      this.closeDoc(true);
+    }else {
     app.alert("Please SIGN the form");
+    }
   }
-})
+});
 
 //ADDING MENU AND SUBMENUS
 app.addSubMenu({cName:"Submit CSR Forms", cParent:"File", nPos:2});
