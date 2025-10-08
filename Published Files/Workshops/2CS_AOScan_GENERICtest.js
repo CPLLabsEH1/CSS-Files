@@ -270,7 +270,7 @@ var InTransitAO = app.trustedFunction(function(){
 // Script to email Lymphoma AOs to Heme and send a copy to Scanning.
 var LymphomaAO = app.trustedFunction(function(){
     
-    if (this.getField("LymphomaFormsv1") === null){
+    if (this.getField("LymphomaFormv1") === null){
 
          var LymphomaAlert = app.alert ("You are using the incorrect form for this button \n\n" + "The correct Lymphoma AO Form will open from the Blank Forms Button",0,0);
 
@@ -283,10 +283,12 @@ var LymphomaAO = app.trustedFunction(function(){
         var HemeFlow = "disthemellp@cpllabs.com";
         var FlowSmRvAOSubLine = "STAT FLOW/SMRV AO " + Original_Accession;
 
+		var LympFileName = Original_Accession + " Lymphoma Flow/SMRV AO " + getLoginName() + " " + myDateString();
+
         // Sending a copy to scanning
 	    app.beginPriv();
-	    this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + Original_Accession + " Lymphoma Flow/SMRV AO " + getLoginName() +" " + myDateString()+" .pdf");
-	    this.saveAs("/uscplatxdfs002p/ePHI/Scanning/ " + Original_Accession +" Lymphoma Flow/SMRV AO " + getLoginName() +" " + myDateString() +" .tif","com.adobe.acrobat.tiff");
+	    this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/" + LympFileName +" .pdf");
+	    this.saveAs("/uscplatxdfs002p/ePHI/Scanning/ " + LympFileName + " .tif","com.adobe.acrobat.tiff");
 	    app.endPriv();
 
         // setting up the email
@@ -322,7 +324,7 @@ var AddOnsMenu = app.trustedFunction(function(){
         }else if(cRtn == "Path Slide Request"){
             PathSlide();
 		}else if(cRtn == "Lymphoma AO Request"){
-            PathSlide();
+            LymphomaAO();
         }else if(cRtn == "Scanning"){
             mySaveAsScanningFolder();
         }else{

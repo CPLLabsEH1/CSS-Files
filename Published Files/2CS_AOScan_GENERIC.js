@@ -62,6 +62,13 @@ function myDateString(){
 	return util.printd("mm.dd-H.MM.ss", new Date()).toUpperCase();
 }
 
+//Undo Read Only
+function UndoRead(){
+	for (var i=0;i < this.numFields; i++){
+	var oField = this.getNthFieldName(i);
+	oField = this.getField(this.getNthFieldName(i)).readonly = false;
+}}
+
 
 //THE SECTION BELOW IS ALL THE NAMED FUNCTIONS FOR DIFFERENT PROCESSES TO HANDLE AOs
 // Function is to create the To Be DE save and button 
@@ -184,26 +191,28 @@ var mySaveAsDEComplete = app.trustedFunction(function()
 	this.closeDoc(true);
 });
 
-//Undo Read Only
-function UndoRead(){
-	for (var i=0;i < this.numFields; i++){
-	var oField = this.getNthFieldName(i);
-	oField = this.getField(this.getNthFieldName(i)).readonly = false;
-}}
-
 // script to email cytology requisition to cytology department
 var Cytology = app.trustedFunction(function(){
-    // setting all variables from grabing the accession and emails and the subject line
-    var CytoAccession = this.getField("Original_Accession").value;
-    var CytoEmail = "DistPathSupportProblems@cpllabs.com";
-    var LeadsEmail = "DISTAUSTINCSLEAD@cpllabs.com";
-    var CytoSubLine = "Cyto Addon " + CytoAccession;
+	if (this.getField("CytologyC6") === null){
+		// Creates alert if incorrect form is being used.
+        var CytoReqAlert = app.alert ("You are using the incorrect form for this button \n\n" + "The correct Cytology AO Form will open from the Blank Forms Button",0,0);
 
-    // the act of emailing the document
-    this.mailDoc({bUI: true, cTo: CytoEmail, cCc: LeadsEmail, cSubject: CytoSubLine});
+    	if (CytoReqAlert == 1){
+            app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Cytology Requisition.pdf");
+        }; 
+	}else{
+    	// setting all variables from grabing the accession and emails and the subject line
+    	var CytoAccession = this.getField("Original_Accession").value;
+    	var CytoEmail = "DistPathSupportProblems@cpllabs.com";
+    	var LeadsEmail = "DISTAUSTINCSLEAD@cpllabs.com";
+    	var CytoSubLine = "Cyto Addon " + CytoAccession;
 
-     //Closes the file so not to be left open.
-     this.closeDoc(true);
+    	// the act of emailing the document
+    	this.mailDoc({bUI: true, cTo: CytoEmail, cCc: LeadsEmail, cSubject: CytoSubLine});
+
+     	//Closes the file so not to be left open.
+     	this.closeDoc(true);
+	}
 });
 
 // Script to email Stat AOs to EH and send a copy to Scanning.
@@ -222,8 +231,8 @@ var StatAO = app.trustedFunction(function(){
     // setting up the email
     this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
 
-     //Closes the file so not to be left open.
-      this.closeDoc(true);
+    //Closes the file so not to be left open.
+    this.closeDoc(true);
 });
 
 // Script to email Path Slide Request
@@ -258,6 +267,40 @@ var InTransitAO = app.trustedFunction(function(){
 
 });
 
+// Script to email Lymphoma AOs to Heme and send a copy to Scanning.
+var LymphomaAO = app.trustedFunction(function(){
+    
+    if (this.getField("LymphomaFormv1") === null){
+
+         var LymphomaAlert = app.alert ("You are using the incorrect form for this button \n\n" + "The correct Lymphoma AO Form will open from the Blank Forms Button",0,0);
+
+        if (LymphomaAlert == 1){
+            app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Lymphoma Forms.pdf");
+        };       
+    } else {
+        // setting all variables 
+        var Original_Accession = this.getField("Acsn Label").value;
+        var HemeFlow = "disthemellp@cpllabs.com";
+        var FlowSmRvAOSubLine = "STAT FLOW/SMRV AO " + Original_Accession;
+
+		var LympFileName = Original_Accession + " Lymphoma Flow SMRV AO " + getLoginName() + " " + myDateString();
+
+		// setting up the email
+        this.mailDoc({bUI: true, cTo: HemeFlow, cSubject: FlowSmRvAOSubLine});
+
+		this.flattenPages();
+
+        // Sending a copy to scanning
+		app.beginPriv();
+		this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/" + LympFileName + " .pdf");
+		this.saveAs("/uscplatxdfs002p/ePHI/Scanning/" + LympFileName +  " .tif","com.adobe.acrobat.tiff");
+		app.endPriv();
+
+        //Closes the file so not to be left open.
+        this.closeDoc(true);
+    }
+});
+
 //ADDING MENU AND SUBMENUS FOR ALL FUNCTIONS
 //Add On Menus
 app.addSubMenu({cName:"Add Ons", cParent:"File", nPos:0});
@@ -266,10 +309,11 @@ app.addMenuItem({cName:"Cytology Email", cParent:"Add Ons", cExec:"Cytology();"}
 app.addMenuItem({cName:"Stat AO", cParent:"Add Ons", cExec:"StatAO();"});
 app.addMenuItem({cName:"In Transit AO", cParent:"Add Ons", cExec:"InTransitAO();"});
 app.addMenuItem({cName:"Path Slide Request", cParent:"Add Ons", cExec:"PathSlide();"});
+app.addMenuItem({cName:"Lymphoma AO Request", cParent:"Add Ons", cExec:"LymphomaAO();"});
 app.addMenuItem({cName:"Scanning Dept", cParent:"Add Ons", cExec:"mySaveAsScanningFolder();"});
 
 var AddOnsMenu = app.trustedFunction(function(){
-    var cRtn = app.popUpMenu("To Be DE","Cytology Email","Stat AO","In Transit AO","Path Slide Request","Scanning");
+    var cRtn = app.popUpMenu("To Be DE","Cytology Email","Stat AO","In Transit AO","Path Slide Request","Lymphoma AO Request","Scanning");
     if(cRtn){
         if(cRtn == "To Be DE"){
             mySaveAsToBeDE();
@@ -281,6 +325,8 @@ var AddOnsMenu = app.trustedFunction(function(){
            InTransitAO();
         }else if(cRtn == "Path Slide Request"){
             PathSlide();
+		}else if(cRtn == "Lymphoma AO Request"){
+            LymphomaAO();
         }else if(cRtn == "Scanning"){
             mySaveAsScanningFolder();
         }else{
