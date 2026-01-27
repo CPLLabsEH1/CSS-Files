@@ -50,7 +50,7 @@ var RepeatForm = app.trustedFunction(function(){
 });
 
 //Open SRF
-var SRF = app.trustedFunction(function(){
+var SRFForm = app.trustedFunction(function(){
     app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Specimen Research Form.pdf");
 });
 
@@ -94,6 +94,12 @@ var CourierLog = app.trustedFunction(function(){
     app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Courier Log.pdf");
 });
 
+//Open Missing Tissue
+var MissingTissue = app.trustedFunction(function(){
+    app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Missing Tissue Cytology Form.pdf");
+});
+
+
 //ADDING MENU AND SUBMENU
 app.addSubMenu({cName:"Blank Forms", cParent:"Window", nPos:1});
 app.addSubMenu({cName:"Requisitions", cParent:"Blank Forms", nPos:1});
@@ -103,12 +109,14 @@ app.addMenuItem({cName:"Abnormal Slide Form", cParent:"Requisitions", cExec:"Abn
 app.addMenuItem({cName:"Allergen Attachment", cParent:"Requisitions", cExec:"Allergen();"});
 app.addMenuItem({cName:"Lymphoma AO Req", cParent:"Requisitions", cExec:"LymphomaAOForm();"});
 app.addMenuItem({cName:"CRT", cParent:"Blank Forms", cExec:"CRTform();"});
-app.addMenuItem({cName:"SRF", cParent:"Blank Forms", cExec:"SRF();"});
-app.addSubMenu({cName:"CARs & BCLs", cParent:"Blank Forms"});
-app.addMenuItem({cName:"CAR with BCL", cParent:"CARs & BCLs", cExec:"CARBCL();"});
-app.addMenuItem({cName:"BCL", cParent:"CARs & BCLs", cExec:"BCL();"});
-app.addMenuItem({cName:"Transfer BCL", cParent:"CARs & BCLs", cExec:"TransferBCL();"});
-app.addMenuItem({cName:"CAR", cParent:"CARs & BCLs", cExec:"CAR();"});
+app.addSubMenu({cName:"Specimen Research", cParent:"Blank Forms"});
+app.addMenuItem({cName:"Specimen Research Form", cParent:"Specimen Research", cExec:"SRFForm();"});
+app.addMenuItem({cName:"Cytology and Tissue", cParent:"Specimen Research", cExec:"MissingTissue();"});
+app.addSubMenu({cName:"CARs and BCLs", cParent:"Blank Forms"});
+app.addMenuItem({cName:"CAR with BCL", cParent:"CARs and BCLs", cExec:"CARBCL();"});
+app.addMenuItem({cName:"BCL", cParent:"CARs and BCLs", cExec:"BCL();"});
+app.addMenuItem({cName:"Transfer BCL", cParent:"CARs and BCLs", cExec:"TransferBCL();"});
+app.addMenuItem({cName:"CAR", cParent:"CARs and BCLs", cExec:"CAR();"});
 app.addMenuItem({cName:"In Transit STAT", cParent:"Blank Forms", cExec:"InTransitSTATForm();"});
 app.addMenuItem({cName:"Repeat", cParent:"Blank Forms", cExec:"RepeatForm();"});
 app.addMenuItem({cName:"Maternal Recal", cParent:"Blank Forms", cExec:"MaternalRecalForm();"});
@@ -121,7 +129,7 @@ app.addMenuItem({cName:"Courier Log", cParent:"Blank Forms", cExec:"CourierLog()
 
 //Popup Menu for the tool bar
 var BlankFormsMenu = app.trustedFunction(function(){
-    var cRtn = app.popUpMenu(["Requisitions","Clinical Req","Cytology Req","Abnormal Slide Form","Allergen Attachment","Lymphoma AO Req"],"CRT","SRF",["CARs & BCLs","CAR w/ BCL","BCL","Transfer BCL","CAR"],"In Tranist STAT","Repeat","Maternal Recal",["Misc Forms","Time Correction and Mileage Form","Technical Issue Form","Account Information Sheet"],"Courier Log");
+    var cRtn = app.popUpMenu(["Requisitions","Clinical Req","Cytology Req","Abnormal Slide Form","Allergen Attachment","Lymphoma AO Req"],"CRT",["Specimen Research","SRF","Cytology and Tissue"],["CARs and BCLs","CAR w/ BCL","BCL","Transfer BCL","CAR"],"In Tranist STAT","Repeat","Maternal Recal",["Misc Forms","Time Correction and Mileage Form","Technical Issue Form","Account Information Sheet"],"Courier Log");
     if(cRtn){
         if(cRtn == "Clinical Req"){
             ClinicalReq();
@@ -134,7 +142,7 @@ var BlankFormsMenu = app.trustedFunction(function(){
         }else if(cRtn == "Transfer BCL"){
             TransferBCL();
         }else if(cRtn == "SRF"){
-            SRF();
+            SRFForm();
         }else if(cRtn == "Repeat"){
             RepeatForm();
         }else if(cRtn == "Maternal Recal"){
@@ -159,6 +167,8 @@ var BlankFormsMenu = app.trustedFunction(function(){
             LymphomaAOForm(); 
         }else if(cRtn == "Courier Log"){
             CourierLog(); 
+        }else if(cRtn == "Cytology and Tissue"){
+            MissingTissue(); 
         }else{
             return;
         }
