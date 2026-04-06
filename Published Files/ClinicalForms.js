@@ -27,7 +27,8 @@ function myDateString(){
 }
     
 // The fuction to send the files to appropriate locations and type.
-var ConfirmAction = function(){
+var ConfirmAction = app.trustedFunction(
+    function(){
     //App alert to send to scanning
     var nConfirm = app.alert("Submit form to Scanning? \n\n" + "\\\\uscplatxdfs002p\\ePHI\\Scanning\\Change after Release & Repeats",2,2);
 
@@ -39,9 +40,10 @@ var ConfirmAction = function(){
         this.closeDoc(true);
     }
 
-};
+});
 
-var SendBackAction = function(){
+var SendBackAction = app.trustedFunction(
+    function(){
     //App alert to send to scanning
     var nSendBack = app.alert("Prepare form for CAR? \n\n" + "A copy of the repeat has been submitted to your Documents folder with the below name. \n\n" + this.getField("TheNumber").value +" Repeat " + getLoginName() +" " + myDateString()+".pdf",2,2);
     
@@ -52,7 +54,7 @@ var SendBackAction = function(){
         this.closeDoc(true);
     }
 
-}
+});
 
 //THE SECTION BELOW WILL BE FOR THE UNIQUE FUNCTIONS THAT WILL BE ASSIGNED TO BUTTONS AND MENUS
 //This is for the Repeat processes. 
