@@ -430,22 +430,34 @@ var BCLSend = app.trustedFunction(function(){
 
 // Faxing BCLs past 10/1
 var BCLXFin = app.trustedFunction(function(){
-//    setting all the variables 
-//    var BCLAccession = this.getField("Text1").value;
-//    var BCLEmail = "8442673272@fax.sonichealthcareusa.com";
-//    var BCLSubLine = "BCL for " + BCLAccession;
-
-//    emailing the doc
-//    this.mailDoc({bUI: true, cTo: BCLEmail, cSubject: BCLSubLine});
     // Sets up app alert to send file
-    var nBCLXfin = app.alert("Submit a BCL? \n\n" + "\\\\uscplatxdfs002p\\ePHI\\Customer Service\\BCLs",2,2);
+    var nBCLAlert = app.alert("Is this a Client Error No Charge Request?",1,2);
 
-    if (nBCLXfin == 4){
+    if (nBCLAlert == 4){
+        //    setting all the variables 
+        var BCLAccession = this.getField("Text1").value;
+        var BCLAcctNum = this.getField("Client Number").value;
+        var BCLEmail = "jcruz@cpllabs.com; msandoval@cpllabs.com ; DISTAUSTINCSLEAD@cpllabs.com";
+        var BCLSubLine = "No Charge BCL for " + BCLAccession + " Acct " + BCLAcctNum;
+
+        //    emailing the doc
+        this.mailDoc({bUI: true, cTo: BCLEmail, cSubject: BCLSubLine});
+
         // This saves it to folder
         app.beginPriv();
-        this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/BCLs/" + this.getField("Text1").value +" BCL " + getLoginName() +" "+ myDateString()+".pdf");
+        this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/BCLs/Emailed/" + this.getField("Text1").value +" No Charge BCL " + getLoginName() +" "+ myDateString()+".pdf");
         app.endPriv();
         this.closeDoc(true);
+    } else {
+        var mBCLAlert = app.alert("Submit BCL to folder \n\n" + "\\\\uscplatxdfs002p\\ePHI\\Customer Service\\BCLs",3,2);
+
+        if (mBCLAlert == 4){
+            // This saves it to folder
+            app.beginPriv();
+            this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/BCLs/" + this.getField("Text1").value +" BCL " + getLoginName() +" "+ myDateString()+".pdf");
+            app.endPriv();
+            this.closeDoc(true);
+        }
     }
 
 });
