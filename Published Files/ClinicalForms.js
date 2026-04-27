@@ -437,7 +437,7 @@ var BCLXFin = app.trustedFunction(function(){
         //    setting all the variables 
         var BCLAccession = this.getField("Text1").value;
         var BCLAcctNum = this.getField("Client Number").value;
-        var BCLEmail = "jcruz@cpllabs.com; msandoval@cpllabs.com ; DISTAUSTINCSLEAD@cpllabs.com";
+        var BCLEmail = "jcruz@cpllabs.com; DISTAUSTINCSLEAD@cpllabs.com";
         var BCLSubLine = "No Charge BCL for " + BCLAccession + " Acct " + BCLAcctNum;
 
         //    emailing the doc
