@@ -24,14 +24,12 @@ var BFdB = height - 57;
 
 // creates fields for barcode and accession
 for (var p=0; p<this.numPages; p++){
-//    var AFd = this.addField({cName:"TheNumber", cFieldType:"text", nPageNum:p, oCoords:[447,740,570,720]});
     var AFd = this.addField({cName:"TheNumber", cFieldType:"text", nPageNum:p, oCoords:[AFdL,AFdT,AFdR,AFdB]});
     AFd.readonly = true;
     AFd.textSize=0;
     AFd.textFont = "Helvetica-Bold";
     AFd.fillColor = color.white;
     AFd.alignment = "center";
-//    var BFd = this.addField({cName:"TheAccession", cFieldType:"text", nPageNum:p, oCoords:[447,775,570,735]});
     var BFd = this.addField({cName:"TheAccession", cFieldType:"text", nPageNum:p, oCoords:[BFdL,BFdT,BFdR,BFdB]});
     BFd.readonly = true;
     BFd.textSize=0
@@ -45,8 +43,6 @@ if(this.getField("TheNumber").value = Acc){
     this.getField("TheAccession").value = "*"+Acc+"*";
 }else{
     this.getField("TheAccession").value = "";
-//    this.removeField("TheAccession");
-//   this.removeField("TheNumber");	
 }
 
 // validation checks
@@ -57,7 +53,7 @@ if ( !myRegExp.test(myTextInput) && event.value != "")
 {
     app.alert("Invalid Accession.");
     event.rc = false;
-//    this.resetForm(["TheNumber","TheAccession"]);
+
     this.removeField("TheAccession");
     this.removeField("TheNumber");	    
 }

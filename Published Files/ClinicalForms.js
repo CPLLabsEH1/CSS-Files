@@ -437,7 +437,7 @@ var BCLXFin = app.trustedFunction(function(){
         //    setting all the variables 
         var BCLAccession = this.getField("Text1").value;
         var BCLAcctNum = this.getField("Client Number").value;
-        var BCLEmail = "jcruz@cpllabs.com; DISTAUSTINCSLEAD@cpllabs.com";
+        var BCLEmail = "msandoval@cpllabs.com; DISTAUSTINCSLEAD@cpllabs.com";
         var BCLSubLine = "No Charge BCL for " + BCLAccession + " Acct " + BCLAcctNum;
 
         //    emailing the doc
@@ -788,7 +788,7 @@ var CRTSend = app.trustedFunction(function(){
         // setting all the variables 
         var CRTAccession = this.getField("Accession").value;
         var CRTPTName = this.getField("Patient Name").value;
-        var CRTEmail = "ClinicalResolutionTeam@int.sonichealthcare";
+        var CRTEmail = "ClinicalResolutionTeam@cpllabs.com";
         var CARSubLine = "";
         var crtCK1 = this.getField("CAR").valueAsString;
         var crtCK2 = this.getField("BCL").valueAsString;
