@@ -15,18 +15,18 @@ var StatAO = app.trustedFunction(function(){
 		// setting up the email
     	this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
 	}else{
-var SRFDlg ={
+        var OrgAccDlg ={
             
             DoDialog: function(){
                 return app.execDialog(this)
             },
 
             // initializing dialog box fields as blank
-            SRFAcc: "",
+            OrigAcc: "",
             initialize: function(dialog)
             {
                 var DiagInit = {
-                    "SAcc":this.SRFAcc,
+                    "OrgAcc":this.OrigAcc,
                 }; 
                 dialog.load(DiagInit);
             },
@@ -34,17 +34,8 @@ var SRFDlg ={
             // committing dialog fields to variables 
             commit: function(dialog)
             {
-                var SRFdata = dialog.store();
-                var tickedItems = [];
-                if (SRFdata["pCK1"])
-                    tickedItems.push("AustinExceptionHandling@cpllabs.com");
-                if (SRFdata["pCK2"])
-                    tickedItems.push("distAustinReferral@cpllabs.com");
-                if (SRFdata["pCK3"])
-                    tickedItems.push("microexceptionhandling@cpllabs.com");
-                this.SRFdata = tickedItems.join(";");
-                var SRFDAcc = dialog.store();
-                this.SRFAcc = SRFDAcc["SAcc"];
+                var OrigDAcc = dialog.store();
+                this.OrigAcc = OrigDAcc["OrgAcc"];
             },
 
             // The dialog box description and fields
@@ -58,32 +49,13 @@ var SRFDlg ={
                         elements:
                         [
                             {
-                                name: "Accession",
+                                name: "Original Accession",
                                 type: "static_text",
                             },
                             {
-                                item_id: "SAcc",
+                                item_id: "OrgAcc",
                                 type: "edit_text",
                                 char_width: 15
-                            },
-                            {
-                                name: "Select the Correct Department",
-                                type: "static_text",
-                            },
-                            {
-                                name: "Exception Handling",
-                                type: "check_box",
-                                item_id: "pCK1",
-                            },
-                            {
-                                name: "Referral",
-                                type: "check_box",
-                                item_id: "pCK2",
-                            },
-                            {
-                                name: "Microbiology",
-                                type: "check_box",
-                                item_id: "pCK3",
                             },
                             {
                                 type: "ok_cancel",
@@ -95,11 +67,12 @@ var SRFDlg ={
         };
 
         // when selecting OK enter in the dialog fields and email
-        if("ok" == SRFDlg.DoDialog()){
-            var SRFAccession = SRFDlg.SRFAcc;
-            var SRFEmail = SRFDlg.SRFdata;
-            SRFSubLine = "SRF for " + SRFAccession;
-            this.mailDoc({bUI: true, cTo: SRFEmail, cSubject: SRFSubLine});
+        if("ok" == OrgAccDlg.DoDialog()){
+            var OrigAccession = OrgAccDlg.OrigAcc;
+   	        var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
+    	    var StatAOSubLine = "STAT AO for " + OrigAccession;
+		    // setting up the email
+    	    this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
         }
 	}
 
