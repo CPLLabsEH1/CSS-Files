@@ -217,28 +217,17 @@ var Cytology = app.trustedFunction(function(){
 
 // Script to email Stat AOs to EH and send a copy to Scanning.
 var StatAO = app.trustedFunction(function(){
-
-	var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
-
-	if (this.getField("Original Acession") === null){
-    var StatAOSubLine = "STAT AO " + myIdString();
-
-	// Sending a copy to scanning
-	app.beginPriv();
-	this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + StatAOSubLine + " " + getLoginName() + " " + myDateString()+" .pdf");
-	app.endPriv();
-	}else{
-    // setting all variables 
+	// setting all variables 
     var Original_Accession = this.getField("Original Accession").value;
+    var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
     var StatAOSubLine = "STAT AO " + Original_Accession;
 
-	// Sending a copy to scanning
+    // Sending a copy to scanning
 	app.beginPriv();
 	this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + Original_Accession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
 	app.endPriv();
-	}
 
-    // setting up the email
+	// setting up the email
     this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
 
     //Closes the file so not to be left open.
