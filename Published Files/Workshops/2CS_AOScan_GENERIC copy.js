@@ -231,17 +231,17 @@ var StatAO = app.trustedFunction(function(){
 		// setting up the email
     	this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
 	}else{
-		    var OrigAccDlg ={
+		    var OrigAccDialog ={
             	DoDialog: function(){
                 	return app.execDialog(this)
             	},
 
             	// initializing dialog box fields as blank
-            	OrgAcc: "",
+            	OriginalAcc: "",
             	initialize: function(dialog)
             	{
                 	var DiagInit = {
-                    	"OrigAcc":this.OrgAcc,
+                    	"OriginalAcc":this.OriginalAcc,
                 	}; 
                 	dialog.load(DiagInit);
             	},
@@ -249,48 +249,49 @@ var StatAO = app.trustedFunction(function(){
             	// committing dialog fields to variables 
             	commit: function(dialog)
             	{
-                	var OrgDAcc = dialog.store();
-                	this.OrgAcc = OrgDAcc["OrigAcc"];
+                	var OriginalDAcc = dialog.store();
+                	this.OriginalAcc = OriginalDAcc["OriginalAcc"];
             	},
 
-            // The dialog box description and fields
-            description:
-            {
-                name: "Complete Entry",
-                elements:
-                [
-                    {
-                        type: "view",
-                        elements:
-                        [
-                            {
-                                name: "Accession",
-                                type: "static_text",
-                            },
-                            {
-                                item_id: "OrigAcc",
-                                type: "edit_text",
-                                char_width: 15
-                            },
-                            {
-                                type: "ok_cancel",
-                            },
-                        ]
-                    },
-                ]
-            }
-        };
+            	// The dialog box description and fields
+            	description:
+            	{
+                	name: "Complete Entry",
+                	elements:
+                	[
+                    	{
+                        	type: "view",
+                        	elements:
+                        	[
+                            	{
+                                	name: "Original Accession",
+                                	type: "static_text",
+                            	},
+                            	{
+                                	item_id: "OriginalAc",
+                                	type: "edit_text",
+                                	char_width: 15
+                            	},
+								{
+									type: "ok_cancel",
+								},
+                        	]
+                    	},
+                	]
+            	}
+        	};
+
 
         // when selecting OK enter in the dialog fields and email
-        if("ok" == OrigAccDlg.DoDialog()){
+        if(OrigAccDialog.DoDialog() == "ok"){
 			// setting all variables 
-            var Original_Accession = OrigAccDlg.OrgAcc;
+            var OriginalDAccession = OrigAccDialog.OriginalAcc;
 			var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
-    		var StatAOSubLine = "STAT AO " + Original_Accession;
+    		var StatAOSubLine = "STAT AO " + OriginalDAccession;
 
 			// Sending a copy to scanning
 			app.beginPriv();
-			this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + Original_Accession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
+			this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + OriginalDAccession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
 			app.endPriv();
 
 			// setting up the email
