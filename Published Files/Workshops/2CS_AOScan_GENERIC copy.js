@@ -283,21 +283,20 @@ var StatAO = app.trustedFunction(function(){
 
         // when selecting OK enter in the dialog fields and email
         if("ok" == OrigAccDlg.DoDialog()){
-            var Original_Accession = SRFDlg.SRFAcc;
+			// setting all variables 
+            var Original_Accession = OrigAccDlg.OrgAcc;
+			var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
+    		var StatAOSubLine = "STAT AO " + Original_Accession;
+
+			// Sending a copy to scanning
+			app.beginPriv();
+			this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + Original_Accession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
+			app.endPriv();
+
+			// setting up the email
+    		this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
         }
-		// setting all variables 
-    	var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
-    	var StatAOSubLine = "STAT AO " + Original_Accession;
-
-    	// Sending a copy to scanning
-		app.beginPriv();
-		this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + Original_Accession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
-		app.endPriv();
-
-		// setting up the email
-    	this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
 	}
-
 
     //Closes the file so not to be left open.
     this.closeDoc(true);
