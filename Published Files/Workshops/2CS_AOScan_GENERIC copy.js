@@ -232,6 +232,7 @@ var StatAO = app.trustedFunction(function(){
     	this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
 	}else{
 		    var OrigAccDialog ={
+				
             	DoDialog: function(){
                 	return app.execDialog(this)
             	},
@@ -282,21 +283,21 @@ var StatAO = app.trustedFunction(function(){
         	};
 
 
-        // when selecting OK enter in the dialog fields and email
-        if(OrigAccDialog.DoDialog() == "ok"){
-			// setting all variables 
-            var Original_Accession = OrigAccDialog.OriginalAcc;
-			var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
-    		var StatAOSubLine = "STAT AO for " + Original_Accession;
+        	// when selecting OK enter in the dialog fields and email
+        	if(OrigAccDialog.DoDialog() == "ok"){
+				// setting all variables 
+            	var Original_Accession = OrigAccDialog.OriginalAcc;
+				var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
+    			var StatAOSubLine = "STAT AO for " + Original_Accession;
 
-			// Sending a copy to scanning
-			app.beginPriv();
-			this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + Original_Accession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
-			app.endPriv();
+				// Sending a copy to scanning
+				app.beginPriv();
+				this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + Original_Accession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
+				app.endPriv();
 
-			// setting up the email
-    		this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
-        }
+				// setting up the email
+    			this.mailDoc({bUI: true, cTo: ExceptionHandling, cSubject: StatAOSubLine});
+        	}
 	}
 
     //Closes the file so not to be left open.
