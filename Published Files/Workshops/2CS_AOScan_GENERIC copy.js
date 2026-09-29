@@ -221,7 +221,7 @@ var StatAO = app.trustedFunction(function(){
 		// setting all variables 
     	var Original_Accession = this.getField("Original Accession").value;
     	var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
-    	var StatAOSubLine = "STAT AO " + Original_Accession;
+    	var StatAOSubLine = "STAT AO for " + Original_Accession;
 
     	// Sending a copy to scanning
 		app.beginPriv();
@@ -268,7 +268,7 @@ var StatAO = app.trustedFunction(function(){
                                 	type: "static_text",
                             	},
                             	{
-                                	item_id: "OriginalAc",
+                                	item_id: "OriginalAcc",
                                 	type: "edit_text",
                                 	char_width: 15
                             	},
@@ -285,13 +285,13 @@ var StatAO = app.trustedFunction(function(){
         // when selecting OK enter in the dialog fields and email
         if(OrigAccDialog.DoDialog() == "ok"){
 			// setting all variables 
-            var OriginalDAccession = OrigAccDialog.OriginalAcc;
+            var Original_Accession = OrigAccDialog.OriginalAcc;
 			var ExceptionHandling = "AustinExceptionHandling@cpllabs.com";
-    		var StatAOSubLine = "STAT AO " + OriginalDAccession;
+    		var StatAOSubLine = "STAT AO for " + Original_Accession;
 
 			// Sending a copy to scanning
 			app.beginPriv();
-			this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + OriginalDAccession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
+			this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + Original_Accession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
 			app.endPriv();
 
 			// setting up the email
