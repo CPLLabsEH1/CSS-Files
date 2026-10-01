@@ -60,6 +60,12 @@ var StatAO = app.trustedFunction(function(){
             var SRFAccession = SRFDlg.SRFAcc;
             var SRFEmail = "AustinExceptionHandling@cpllabs.com";
             SRFSubLine = "SRF for " + SRFAccession;
+    	    
+            // Sending a copy to scanning
+		    app.beginPriv();
+		    this.saveAs("/uscplatxdfs002p/ePHI/Customer Service/Scanning Folder/"  + SRFAccession + " STAT AO " + getLoginName() +" " + myDateString()+" .pdf");
+		    app.endPriv();
+
             this.mailDoc({bUI: true, cTo: SRFEmail, cSubject: SRFSubLine});
         }
 
