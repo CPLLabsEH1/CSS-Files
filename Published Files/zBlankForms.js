@@ -11,7 +11,10 @@ var AbnSlideRevForm = app.trustedFunction(function(){
 
 //Open Billing Correction 
 var BCL = app.trustedFunction(function(){
-    app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Billing Correction (BCL).pdf");
+    app.beginPriv();
+    var BCLReset = app.openDoc("/uscplatxdfs001p/CLIENT/OPERATIONS/Customer Service/Resources/zFiles/Billing Correction (BCL).pdf");
+    BCLReset.resetForm();
+    app.endPriv();
 });
 
 //Open Transfer BCL
